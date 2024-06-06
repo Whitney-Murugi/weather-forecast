@@ -1,5 +1,5 @@
 body {
-  background-color: f9f7fe;
+  background-color: #f9f7fe;
   font-family: "Roboto", sans-serif;
 }
 header {
@@ -37,7 +37,7 @@ header {
 }
 .city {
   font-size: 38px;
-  font-weight: 700px;
+  font-weight: 700;
   line-height: 48px;
 }
 .details {
