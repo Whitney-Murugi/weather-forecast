@@ -52,3 +52,5 @@ function searchCity(event) {
 
 let searchElement = document.querySelector("#search-form");
 searchElement.addEventListener("submit", searchCity);
+
+getTemperature("Paris");
