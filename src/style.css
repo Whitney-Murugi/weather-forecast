@@ -59,6 +59,7 @@ header {
 .icon {
   font-size: 44px;
   margin-top: 22px;
+  height: 44px;
 }
 .unit {
   margin-top: 16px;

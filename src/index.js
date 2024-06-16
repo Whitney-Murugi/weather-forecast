@@ -7,7 +7,9 @@ function giveResponse(response) {
   let dataWind = document.querySelector("#wind");
   let dataTime = document.querySelector("#time");
   let date = new Date(response.data.time * 1000);
+  let dataIcon = document.querySelector("#icon");
 
+  dataIcon.innerHTML = `<img src="${response.data.condition.icon_url}">`;
   dataTime.innerHTML = formalTime(date);
   dataWind.innerHTML = `${response.data.wind.speed} km/h`;
   dataHumidity.innerHTML = `${response.data.temperature.humidity}%`;
