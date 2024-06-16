@@ -1,10 +1,39 @@
 function giveResponse(response) {
   let area = document.querySelector("#Weather");
-  let data = Math.round(response.data.temperature.current);
+  let dataDetails = Math.round(response.data.temperature.current);
   let city = document.querySelector("#city");
+  let dataDescription = document.querySelector("#description");
+  let dataHumidity = document.querySelector("#Humidity");
+  let dataWind = document.querySelector("#wind");
+  let dataTime = document.querySelector("#time");
+  let date = new Date(response.data.time * 1000);
 
+  dataTime.innerHTML = formalTime(date);
+  dataWind.innerHTML = `${response.data.wind.speed} km/h`;
+  dataHumidity.innerHTML = `${response.data.temperature.humidity}%`;
+  dataDescription.innerHTML = response.data.condition.description;
   city.innerHTML = response.data.city;
-  area.innerHTML = data;
+  area.innerHTML = dataDetails;
+}
+function formalTime(date) {
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  let day = days[date.getDay()];
+
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
+
+  return `${day}, ${hours}:${minutes}`;
 }
 
 function getTemperature(city) {
