@@ -16,6 +16,8 @@ function giveResponse(response) {
   dataDescription.innerHTML = response.data.condition.description;
   city.innerHTML = response.data.city;
   area.innerHTML = dataDetails;
+
+  getForecast(response.data.city);
 }
 function formalTime(date) {
   let hours = date.getHours();
@@ -53,28 +55,47 @@ function searchCity(event) {
 let searchElement = document.querySelector("#search-form");
 searchElement.addEventListener("submit", searchCity);
 
-function displayForecast() {
-  let forecast = document.querySelector("#forecast");
+function formalDate(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
 
-  let days = ["Tue", "Wed", "Thur", "Fri", "Sat"];
+  return days[date.getDay()];
+}
+
+function getForecast(city) {
+  let ApiKey = "23e2742eef1f1bc7tod430e337aaf4bd";
+  let ApiCall = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${ApiKey}&units=metric`;
+  axios(ApiCall).then(displayForecast);
+}
+
+function displayForecast(response) {
+  console.log(response.data);
+
   let forecastHtml = "";
 
-  days.forEach(function (day) {
-    forecastHtml =
-      forecastHtml +
-      `
+  response.data.daily.forEach(function (day, index) {
+    if (index < 5) {
+      forecastHtml =
+        forecastHtml +
+        `
 <div class="day">
-            <div class="date">${day}</div>
-            <div class="forecast-icon">🌤</div>
+            <div class="date">${formalDate(day.time)}</div>
+            <div class="forecast-icon">
+            <img src="${day.condition.icon_url}" class="icon">
+            </div>
             <div class="forecast-temperature">
-              <div class="min"><strong>19º</strong></div>
-              <div class="min">12º</div>
+              <div class="min"><strong>${Math.round(
+                day.temperature.maximum
+              )}º</strong></div>
+              <div class="min">${Math.round(day.temperature.minimum)}º</div>
             </div>
           </div>
 `;
+    }
   });
+
+  let forecast = document.querySelector("#forecast");
   forecast.innerHTML = forecastHtml;
 }
 
 getTemperature("Paris");
-displayForecast();
